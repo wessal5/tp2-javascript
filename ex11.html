@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercice — Filtrage de tableau</title>
+
+  <!-- Import Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== BASE ===== */
+    body {
+      margin: 0;
+      padding: 50px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fefaf7, #fffdfb);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #3a0a2b;
+    }
+
+    /* ===== Bouton retour (standard TP) ===== */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background-color: #000;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #5c1e55;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== INPUT ===== */
+    .inputSearch {
+      border: 2px solid #d8bfff;
+      border-radius: 12px;
+      width: 380px;
+      padding: 10px 15px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+      background-color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .inputSearch:focus {
+      border-color: #E5A0D7;
+      box-shadow: 0 6px 15px rgba(229,160,215,0.3);
+      transform: scale(1.02);
+    }
+
+    /* ===== LISTE ===== */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 25px;
+    }
+
+    ul li {
+      background: linear-gradient(135deg, #CF9BDD, #FBA8B6);
+      border-radius: 12px;
+      padding: 12px 15px;
+      margin-bottom: 12px;
+      width: 380px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    ul li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      background: linear-gradient(135deg, #E5A0D7, #FEBFA1);
+    }
+
+    /* ===== CACHER ===== */
+    .liHide {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Bouton retour -->
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <h3>Liste de Produits</h3>
+  <input class="inputSearch" type="text" placeholder="🔍 Rechercher un produit...">
+
+  <ul>
+    <li>Ordinateur Portable</li>
+    <li>Smartphone</li>
+    <li>Casque Audio</li>
+    <li>Écran LED</li>
+    <li>Clavier Mécanique</li>
+    <li>Souris Sans Fil</li>
+  </ul>
+
+  <script>
+    const inputSearchElm = document.querySelector(".inputSearch");
+    const listeProduits = document.querySelectorAll("ul li");
+
+    inputSearchElm.addEventListener("input", () => {
+      const searchTerm = inputSearchElm.value.toLowerCase();
+      for (let i = 0; i < listeProduits.length; i++) {
+        listeProduits[i].classList.toggle(
+          "liHide",
+          !listeProduits[i].innerText.toLowerCase().includes(searchTerm)
+        );
+      }
+    });
+  </script>
+
+</body>
+</html>

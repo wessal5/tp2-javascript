@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire de validation</title>
+
+  <style>
+    /* IMPORTANT : évite les débordements */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f2f2f2;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* Bouton retour */
+    .btnBack{
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btnBack:hover{
+      background-color: #000;
+    }
+
+    form {
+      background-color: white;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 340px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 6px;
+      font-size: 15px;
+      border: 1px solid #999;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: 1px solid #555;
+      border-radius: 6px;
+      background-color: #e5e5e5;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d4d4d4;
+    }
+
+    p {
+      color: red;
+      font-size: 13px;
+      margin: 4px 0 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="../index.html" class="btnBack">⬅ Retour à l’accueil</a>
+
+  <form method="GET" id="form">
+    <input type="text" placeholder="Nom" class="name-js">
+    <p class="p1-js"></p>
+
+    <input type="email" placeholder="Email" class="email-js">
+    <p class="p2-js"></p>
+
+    <button type="submit">Soumettre</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('form');
+    const nameElm = document.querySelector('.name-js');
+    const emailElm = document.querySelector('.email-js');
+    const p1 = document.querySelector('.p1-js');
+    const p2 = document.querySelector('.p2-js');
+
+    form.addEventListener('submit', function (e) {
+      let valid = true;
+
+      // Réinitialisation des messages
+      p1.textContent = '';
+      p2.textContent = '';
+
+      if (nameElm.value.trim() === '') {
+        p1.textContent = 'Le champ nom est obligatoire';
+        valid = false;
+      }
+
+      if (emailElm.value.trim() === '') {
+        p2.textContent = 'Le champ email est obligatoire';
+        valid = false;
+      }
+
+      if (!valid) {
+        e.preventDefault(); // bloque l'envoi du formulaire
+      }
+    });
+  </script>
+
+</body>
+</html>

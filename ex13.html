@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation de barre de progression</title>
+
+<style>
+  body{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:28px;
+    font-family: Arial, sans-serif;
+    height:100vh;
+    margin:0;
+  }
+
+  /* ===== Bouton retour (standard TP) ===== */
+  .back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 8px 14px;
+    background-color: #111827;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+
+  .back-btn:hover {
+    background-color: #000;
+  }
+
+  /* ===== STYLE ORIGINAL ===== */
+  .barreOutside{
+    height:25px;
+    width:400px;
+    background-color: #e4e4e4;
+    border: 1px solid rgba(128, 128, 128, 0.9);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .barreInside{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing: border-box;
+    height:25px;
+    width: 0px;
+    max-width:100%;
+    font-size: smaller;
+    background-color: #4CAF50;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    color:white;
+    font-weight:bold;
+    transition: width 0.2s ease, background-color 0.3s;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  }
+
+  .msg{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size:16px;
+    color: #555;
+    font-style: italic;
+    min-height:20px;
+    transition: color 0.2s;
+  }
+
+  button{
+    background-color: #2196F3;
+    border:1px white solid; 
+    border-radius:5px;
+    padding:6px 12px;
+    font-weight: bold;
+    color:white;
+    transition: all 0.15s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  button:hover{
+    cursor: pointer;
+    opacity: 0.9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+
+  button:active{
+    transform: translateY(1px);
+    opacity: 0.8;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .borderFinish{
+    box-shadow: 0 0 10px rgba(76,175,80,0.6);
+  }
+</style>
+
+</head>
+<body>
+
+  <!-- Bouton retour -->
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <h3>Barre de progression</h3>
+
+  <div class="barreOutside">
+    <div class="barreInside"></div>
+  </div>
+
+  <div class="msg"></div>
+
+  <button onclick="progresser();">Démarrer</button>
+
+<script>
+  let currentInterval;
+  let currentInterval2;
+
+  function progresser(){
+    let i=0;
+    let toggleCond = false;
+    let dotCount = 0;
+    const message = document.querySelector(".msg");
+
+    clearInterval(currentInterval);
+    clearInterval(currentInterval2);
+
+    message.innerHTML= "chargement . . . ";
+
+    currentInterval = setInterval(()=>{
+      const barElm = document.querySelector(".barreInside");
+      barElm.innerHTML = `${i}%`;
+      barElm.style.width = `${i}%`;
+      i++;
+
+      if(i > 100){
+        clearInterval(currentInterval);
+        clearInterval(currentInterval2);
+        barElm.classList.add("borderFinish");
+        message.innerHTML="Chargement réussi";
+      }
+    }, 100);
+
+    currentInterval2 = setInterval(()=>{
+      dotCount = (dotCount + 1) % 4;
+      toggleCond = !dotCount;
+      message.innerHTML= toggleCond ? "chargement" : ". ".repeat(dotCount);
+    },500);
+  }
+</script>
+
+</body>
+</html>

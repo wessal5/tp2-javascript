@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercice 8 — Événements de souris</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== BASE ===== */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #FEBFA1, #fffdf8, #FEBFA1);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* ===== Bouton retour (standard TP) ===== */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background-color: #000;
+    }
+
+    /* ===== CARD CONTAINER ===== */
+    .container {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 320px;
+      width: 320px;
+      background: linear-gradient(145deg, #CF9BDD, #E5A0D7);
+      border-radius: 30px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+      color: #953b11f0;
+      font-size: x-large;
+      text-align: center;
+      font-weight: bold;
+      transition: all 0.5s ease;
+      cursor: default;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== ON HOVER ===== */
+    .container.changeColor {
+      background: linear-gradient(135deg,
+        #CF9BDD 0%, 
+        #E5A0D7 25%, 
+        #FBA8B6 50%, 
+        #FEBFA1 75%, 
+        #FCD392 100%
+      );
+      transform: scale(1.08) rotate(-1deg);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+      text-shadow: 0 2px 6px rgba(255,255,255,0.4);
+    }
+
+    /* ===== Subtle glow effect ===== */
+    .container::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 35px;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: -1;
+    }
+
+    .container.changeColor::after {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Bouton retour -->
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <!-- Carte -->
+  <div class="container container-js">
+    Passez la souris ici
+  </div>
+
+  <script>
+    const divElm = document.querySelector('.container-js');
+
+    divElm.addEventListener("mouseover", () => {
+      divElm.classList.add('changeColor');
+    });
+
+    divElm.addEventListener("mouseout", () => {
+      divElm.classList.remove('changeColor');
+    });
+  </script>
+
+</body>
+</html>

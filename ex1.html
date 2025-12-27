@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changer de style au clic</title>
+
+  <style>
+    body {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background-color: beige;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      text-decoration: none;
+      padding: 8px 14px;
+      background-color: #333;
+      color: white;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    div {
+      width: 300px;
+      height: 260px;
+      background-color: coral;
+      border-radius: 10px;
+      border: white 1px solid;
+      transition: background-color 0.3s;
+    }
+
+    .btnChange {
+      padding: 8px 16px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 10px;
+      border: solid 1.5px #5f5c5c2b;
+      color: coral;
+      cursor: pointer;
+      background-color: #FFFFFF90;
+    }
+
+    .btnChange:hover {
+      transform: scale(1.05);
+    }
+
+    .btnChange:active {
+      transform: translateY(2px);
+    }
+
+    input[type="color"] {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <div class="js-div"></div>
+
+  <p>
+    <button onclick="changeColeur()" class="btnChange">Change Color</button>
+    <input type="color">
+  </p>
+
+<script>
+  const colorInputElm = document.querySelector('input[type="color"]');
+  colorInputElm.addEventListener("input", changeFontColor);
+
+  function changeColeur() {
+    const divElm = document.querySelector('.js-div');
+    const colorSelected = colorInputElm.value;
+    divElm.style.backgroundColor = colorSelected;
+  }
+
+  function changeFontColor() {
+    const btnElm = document.querySelector(".btnChange");
+    const colorSelected = colorInputElm.value;
+    btnElm.style.color = colorSelected;
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thème clair/sombre</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Bouton retour (standard TP) ===== */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background-color: #000;
+    }
+
+    /* ===== STYLE ORIGINAL ===== */
+    .activateBtn{
+      background-color: rgba(232, 230, 230, 1);
+      border: none;
+      border-radius: 5px;
+      padding: 15px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20%;
+      width: 200px;
+      color: rgba(0, 0, 0, 0.64);
+      transition: all 0.4s;
+    }
+
+    .activateBtn:hover{
+      opacity: 0.9;
+    }
+
+    .activateBtn:active{
+      transform: translateY(5px);
+      opacity: 0.8;
+    }
+
+    .head{
+      font-size: larger;
+      font-weight: bold;
+      position: fixed;
+      width: 100vw;
+      height: 100px;
+      box-sizing: border-box;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      background: linear-gradient(145deg, #cbcacaff, rgba(232, 230, 230, 1), #cbcacaff);
+      color: rgba(0, 0, 0, 0.64);
+    }
+
+    .darkModeHeader{
+      background: linear-gradient(120deg, #cbcacab7, rgba(232, 230, 230, 0.66), #cbcacab7);
+      color: rgba(255, 255, 255, 1);
+    }
+
+    body{
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.4s;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Bouton retour -->
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <header class="head">
+    Basculer entre th&egrave;me clair et sombre
+  </header>
+
+  <button class="activateBtn" onclick="changerTheme();">
+    Activer le th&egrave;me sombre
+  </button>
+
+  <script>
+    let condition = false;
+
+    function changerTheme(){
+      const bodyElm = document.querySelector("body");
+      const headerElm = document.querySelector("header");
+      const btnElm = document.querySelector(".activateBtn");
+
+      btnElm.innerHTML = condition
+        ? "Activer le th&egrave;me sombre"
+        : "Activer le th&egrave;me clair";
+
+      bodyElm.style.backgroundColor = condition ? "white" : "black";
+      headerElm.classList.toggle("darkModeHeader", !condition);
+      btnElm.classList.toggle("darkModeHeader", !condition);
+
+      condition = !condition;
+    }
+  </script>
+
+</body>
+</html>

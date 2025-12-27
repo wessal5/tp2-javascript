@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Afficher / Masquer le texte</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0 20px;
+      gap: 25px;
+      background: linear-gradient(145deg, #d9b3ff, #f5d3a6);
+    }
+
+    .paragraphe {
+      font-size: 1.3rem;
+      font-weight: 500;
+      padding: 20px 35px;
+      background: #f0cfff;
+      color: #4a3f55;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      text-align: center;
+      min-height: 60px;
+    }
+
+    .js-button {
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      background: #f5d3a6;
+      color: #4a3f55;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .js-button:disabled {
+      cursor: wait;
+      opacity: 0.5;
+    }
+
+    /* Bouton retour */
+    .btnBack{
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #4a3f55;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btnBack:hover{
+      background-color: #2f2736;
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="../index.html" class="btnBack">⬅ Retour à l’accueil</a>
+
+  <p class="paragraphe js-p"></p>
+  <button class="js-button">Masquer</button>
+
+  <script>
+    const pElm = document.querySelector('.js-p');
+    const buttonElm = document.querySelector('.js-button');
+    const texte = "Le soleil se couchait lentement derrière les collines.";
+
+    let isVisible = true;
+    let intervalId = null;
+
+    function afficherTexte() {
+      pElm.innerHTML = "";
+      pElm.style.display = "block";
+      buttonElm.disabled = true;
+
+      let i = 0;
+
+      intervalId = setInterval(() => {
+        pElm.innerHTML += texte.charAt(i);
+        i++;
+
+        if (i === texte.length) {
+          clearInterval(intervalId);
+          buttonElm.disabled = false;
+        }
+      }, 50);
+    }
+
+    function masquerTexte() {
+      clearInterval(intervalId);
+      pElm.style.display = "none";
+    }
+
+    buttonElm.addEventListener("click", () => {
+      if (isVisible) {
+        masquerTexte();
+        buttonElm.textContent = "Afficher";
+      } else {
+        afficherTexte();
+        buttonElm.textContent = "Masquer";
+      }
+      isVisible = !isVisible;
+    });
+
+    // affichage initial
+    afficherTexte();
+  </script>
+
+</body>
+</html>

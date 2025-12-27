@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercice 4 – Calculateur & Calculatrice</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #f3f4f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 60px;
+    }
+
+    /* Bouton retour */
+    .btnBack{
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btnBack:hover{
+      background-color: #000;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    /* ===================== */
+    /* CALCULATEUR (Part 1) */
+    /* ===================== */
+
+    .calc-simple {
+      background-color: #ffffff;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-align: center;
+      width: 320px;
+    }
+
+    .calc-simple input {
+      width: 120px;
+      padding: 8px;
+      margin: 6px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #999;
+    }
+
+    .calc-simple button {
+      width: 50px;
+      height: 40px;
+      margin: 10px 6px;
+      font-size: 18px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background-color: #e5e5e5;
+      cursor: pointer;
+    }
+
+    .calc-simple button:hover {
+      background-color: #d4d4d4;
+    }
+
+    .resultat-js {
+      margin-top: 16px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+
+    /* ===================== */
+    /* CALCULATRICE (Part 2) */
+    /* ===================== */
+
+    .calculator {
+      background-color: #1f2933;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .resultContainer {
+      height: 60px;
+      margin-bottom: 14px;
+      background-color: #111827;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 1.8rem;
+      padding-right: 10px;
+      border-radius: 10px;
+    }
+
+    .buttonsContainer {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      grid-template-rows: repeat(5, 60px);
+      gap: 10px;
+    }
+
+    .buttonsContainer button {
+      border: none;
+      border-radius: 12px;
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+      background-color: #374151;
+    }
+
+    .buttonsContainer button:hover {
+      background-color: #4b5563;
+    }
+
+    button:nth-child(1) { background-color: #ef4444; }
+    button:nth-child(4),
+    button:nth-child(8),
+    button:nth-child(12),
+    button:nth-child(16) { background-color: #f59e0b; }
+    button:nth-child(16) { background-color: #22c55e; }
+  </style>
+</head>
+
+<body>
+
+  <a href="../index.html" class="btnBack">⬅ Retour à l’accueil</a>
+
+  <!-- ===== CALCULATEUR ===== -->
+  <section>
+    <h2>Calculateur</h2>
+
+    <div class="calc-simple">
+      <input type="number" class="num1" placeholder="Nombre 1">
+      <input type="number" class="num2" placeholder="Nombre 2">
+
+      <div>
+        <button onclick="calcul('+')">+</button>
+        <button onclick="calcul('-')">-</button>
+        <button onclick="calcul('*')">*</button>
+        <button onclick="calcul('/')">/</button>
+      </div>
+
+      <div class="resultat-js"></div>
+    </div>
+  </section>
+
+  <!-- ===== CALCULATRICE ===== -->
+  <section>
+    <h2>Calculatrice</h2>
+
+    <div class="calculator">
+      <div class="resultContainer">0</div>
+
+      <div class="buttonsContainer">
+        <button onclick="clearFunction()">C</button>
+        <button onclick="deleteLastCharacter()">⌫</button>
+        <button onclick="appendToResult('/')">/</button>
+        <button onclick="appendToResult('*')">*</button>
+
+        <button onclick="enterNumber('7')">7</button>
+        <button onclick="enterNumber('8')">8</button>
+        <button onclick="enterNumber('9')">9</button>
+        <button onclick="appendToResult('-')">-</button>
+
+        <button onclick="enterNumber('4')">4</button>
+        <button onclick="enterNumber('5')">5</button>
+        <button onclick="enterNumber('6')">6</button>
+        <button onclick="appendToResult('+')">+</button>
+
+        <button onclick="enterNumber('1')">1</button>
+        <button onclick="enterNumber('2')">2</button>
+        <button onclick="enterNumber('3')">3</button>
+        <button onclick="calculateResult()">=</button>
+
+        <button onclick="enterNumber('0')">0</button>
+        <button onclick="addComma()">.</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* Calculateur */
+    function calcul(op) {
+      const n1 = document.querySelector('.num1').value;
+      const n2 = document.querySelector('.num2').value;
+      const res = document.querySelector('.resultat-js');
+
+      if (n1 === "" || n2 === "") {
+        res.textContent = "Veuillez remplir les champs.";
+        res.classList.add("error");
+        return;
+      }
+
+      res.classList.remove("error");
+
+      const a = Number(n1);
+      const b = Number(n2);
+      let r;
+
+      if (op === '+') r = a + b;
+      if (op === '-') r = a - b;
+      if (op === '*') r = a * b;
+      if (op === '/') {
+        if (b === 0) {
+          res.textContent = "Division par zéro interdite.";
+          res.classList.add("error");
+          return;
+        }
+        r = a / b;
+      }
+
+      res.textContent = "Résultat : " + r;
+    }
+
+    /* Calculatrice */
+    const resultContainer = document.querySelector(".resultContainer");
+    let lastWasOperator = false;
+
+    function clearFunction() {
+      resultContainer.innerText = "0";
+      lastWasOperator = false;
+    }
+
+    function deleteLastCharacter() {
+      resultContainer.innerText =
+        resultContainer.innerText.slice(0, -1) || "0";
+      lastWasOperator = false;
+    }
+
+    function enterNumber(num) {
+      resultContainer.innerText =
+        resultContainer.innerText === "0"
+          ? num
+          : resultContainer.innerText + num;
+      lastWasOperator = false;
+    }
+
+    function addComma() {
+      const parts = resultContainer.innerText.split(/[+\-*/]/);
+      if (!parts[parts.length - 1].includes(".")) {
+        resultContainer.innerText += ".";
+      }
+    }
+
+    function appendToResult(op) {
+      if (!lastWasOperator) {
+        resultContainer.innerText += op;
+        lastWasOperator = true;
+      }
+    }
+
+    function calculateResult() {
+      try {
+        resultContainer.innerText = eval(resultContainer.innerText);
+      } catch {
+        resultContainer.innerText = "Error";
+      }
+    }
+  </script>
+
+</body>
+</html>

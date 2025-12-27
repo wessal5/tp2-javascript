@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — Modal de notification</title>
+
+<style>
+  /* ===== BASE ===== */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+  }
+
+  /* ===== Bouton retour (standard TP) ===== */
+  .back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 8px 14px;
+    background-color: #111827;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+
+  .back-btn:hover {
+    background-color: #000;
+  }
+
+  /* ===== Bouton ouvrir ===== */
+  .openBtn {
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: 2px solid #bbb;
+    background-color: #ddd;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .openBtn:hover {
+    background-color: #ccc;
+  }
+
+  /* ===== Overlay du body quand modal ouverte ===== */
+  .bodyOpen::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1;
+  }
+
+  /* ===== Modal ===== */
+  .modale {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e0e0e0;
+    padding: 30px 50px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    z-index: 2;
+    text-align: center;
+  }
+
+  .modale p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  /* ===== Bouton fermer ===== */
+  .closeBtn {
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+    background-color: #bbb;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .closeBtn:hover {
+    background-color: #999;
+  }
+
+  /* ===== Classes utilitaires ===== */
+  .blockDisplay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .noneDisplay {
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- Bouton retour -->
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <!-- Bouton ouverture -->
+  <button class="openBtn" onclick="displayMod()">Ouvrir la modal</button>
+
+  <!-- Modal -->
+  <div class="modale">
+    <p>Voici la Modale</p>
+    <button class="closeBtn" onclick="closeMod()">❌ Fermer</button>
+  </div>
+
+<script>
+  const modaleElm = document.querySelector(".modale");
+  const openBtnElm = document.querySelector(".openBtn");
+  const bodyElm = document.querySelector("body");
+
+  function displayMod() {
+    modaleElm.classList.add("blockDisplay");
+    openBtnElm.classList.add("noneDisplay");
+    bodyElm.classList.add("bodyOpen");
+  }
+
+  function closeMod() {
+    modaleElm.classList.remove("blockDisplay");
+    openBtnElm.classList.remove("noneDisplay");
+    bodyElm.classList.remove("bodyOpen");
+  }
+</script>
+
+</body>
+</html>

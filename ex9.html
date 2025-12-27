@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercice — To-do list interactive</title>
+
+  <style>
+    /* ===== BASE ===== */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(120deg, #ffe6f0, #ffcce6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+      color: #333;
+      margin: 0;
+    }
+
+    /* ===== Bouton retour (standard TP) ===== */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background-color: #000;
+    }
+
+    /* ===== INPUT ===== */
+    input[type="text"] {
+      padding: 10px 15px;
+      border: 2px solid #ff99cc;
+      border-radius: 25px;
+      outline: none;
+      width: 250px;
+      font-size: 16px;
+    }
+
+    input[type="text"]:focus {
+      border-color: #ff66b3;
+    }
+
+    /* ===== BUTTONS ===== */
+    .addBtn, .deleteBtn {
+      background-color: #ff66b3;
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      margin-left: 10px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+
+    .addBtn:hover, .deleteBtn:hover {
+      background-color: #ff3385;
+    }
+
+    /* ===== LIST ===== */
+    .listTaches {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+      width: 300px;
+    }
+
+    .listTaches li {
+      background-color: #ffe6f2;
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .decoration {
+      text-decoration: line-through;
+      font-style: italic;
+      color: #ff99cc;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #ff66b3;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Bouton retour -->
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <!-- To-do list -->
+  <div>
+    <input type="text" placeholder="Ajouter une tâche">
+    <button class="addBtn">Ajouter</button>
+  </div>
+
+  <ul class="listTaches"></ul>
+
+  <script>
+    const tacheInputElm = document.querySelector("input[type='text']");
+    const addBtnElm = document.querySelector(".addBtn");
+
+    addBtnElm.addEventListener("click", ajouterTache);
+
+    tacheInputElm.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        ajouterTache();
+      }
+    });
+
+    function ajouterTache() {
+      const listElm = document.querySelector(".listTaches");
+      const tache = tacheInputElm.value;
+
+      if (tache.trim() === "") return;
+
+      listElm.insertAdjacentHTML("beforeend", `
+        <li>
+          <input type="checkbox" onclick="checker(this)">
+          <span>${tache}</span>
+          <button class="deleteBtn" onclick="supprTache(this)">🗑️ Supprimer</button>
+        </li>
+      `);
+
+      tacheInputElm.value = "";
+    }
+
+    function supprTache(btn) {
+      btn.parentElement.remove();
+    }
+
+    function checker(inp) {
+      inp.nextElementSibling.classList.toggle("decoration", inp.checked);
+    }
+  </script>
+
+</body>
+</html>

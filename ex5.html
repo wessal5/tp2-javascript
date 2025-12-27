@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercice 5 – Carousel d'images</title>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      gap: 25px;
+      background: linear-gradient(135deg, #d9b3ff, #f5d3a6);
+    }
+
+    /* Bouton retour */
+    .btnBack{
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btnBack:hover{
+      background-color: #000;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .carousel {
+      position: relative;
+      width: 400px;
+      height: 350px;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      background: #ffffffa8;
+      transition: transform 0.3s ease;
+    }
+
+    .carousel:hover {
+      transform: scale(1.03);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 25px;
+    }
+
+    /* Boutons */
+    .btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.09);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backdrop-filter: brightness(150%);
+    }
+
+    .btn-left {
+      left: 15px;
+    }
+
+    .btn-right {
+      right: 15px;
+    }
+
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.45);
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -35px;
+      background-color: rgba(0, 0, 0, 0.26);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover::after {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="../index.html" class="btnBack">⬅ Retour à l’accueil</a>
+
+
+  <div class="carousel">
+    <img src="images/image1.jpg" alt="Image du carousel">
+    <button class="btn btn-left" data-tooltip="Précédent" onclick="precedent()">&lt;</button>
+    <button class="btn btn-right" data-tooltip="Suivant" onclick="suivant()">&gt;</button>
+  </div>
+
+  <script>
+    let i = 0;
+    const images = [
+      'images/image1.jpg',
+      'images/image2.jpg',
+      'images/image3.jpg',
+      'images/image4.jpg',
+      'images/image5.webp',
+      'images/image6.webp',
+      'images/image7.webp',
+      'images/image8.jpg',
+      'images/image9.jpg',
+      'images/image10.jpg',
+      'images/image11.jpg'
+    ];
+
+    function updateImage() {
+      document.querySelector('.carousel img').src = images[i];
+    }
+
+    function suivant() {
+      i = (i + 1) % images.length;
+      updateImage();
+    }
+
+    function precedent() {
+      i = (i - 1 + images.length) % images.length;
+      updateImage();
+    }
+  </script>
+
+</body>
+</html>

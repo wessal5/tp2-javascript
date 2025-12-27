@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag and Drop</title>
+
+  <style>
+    /* ===== Bouton retour (standard TP) ===== */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 8px 14px;
+      background-color: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background-color: #000;
+    }
+
+    /* ===== STYLE ORIGINAL ===== */
+    .deplacer, .deposer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      min-height: 30vh;
+      min-width: 20vw;
+      border-radius: 10px;
+    }
+
+    .deplacer {
+      background-color: lightgrey;
+      border: solid 2px grey;
+    }
+
+    .deposer {
+      background-color: rgba(240, 233, 233, 0.963);
+      border: dashed 2px grey;
+      transition: 0.3s;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .element {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      padding: 4px 8px;
+      border: 1px grey solid;
+      border-radius: 15px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .element:active {
+      cursor: grabbing;
+    }
+
+    .dragover {
+      background-color: #d1ffd1;
+      border-color: #4CAF50;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Bouton retour -->
+  <a href="../index.html" class="back-btn">⬅ Retour à l’accueil</a>
+
+  <div class="deplacer">
+    <h3>À déplacer</h3>
+    <div class="element" draggable="true">Élément 1</div>
+    <div class="element" draggable="true">Élément 2</div>
+    <div class="element" draggable="true">Élément 3</div>
+  </div>
+
+  <div class="deposer">
+    <h3>À déposer</h3>
+  </div>
+
+  <script>
+    const elements = document.querySelectorAll(".element");
+    const dropZone = document.querySelector(".deposer");
+
+    // On commence à déplacer
+    elements.forEach(el => {
+      el.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text/plain", e.target.innerText);
+        e.target.classList.add("dragging");
+      });
+
+      el.addEventListener("dragend", e => {
+        e.target.classList.remove("dragging");
+      });
+    });
+
+    // On survole la zone de dépôt
+    dropZone.addEventListener("dragover", e => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+
+    // Quand on dépose
+    dropZone.addEventListener("drop", e => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+
+      const dragged = document.querySelector(".dragging");
+      if (dragged) {
+        dropZone.appendChild(dragged);
+      }
+    });
+  </script>
+
+</body>
+</html>
